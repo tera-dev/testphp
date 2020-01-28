@@ -50,7 +50,7 @@ include_once _MODELS_DIR_.'Territory.php';
 <span class="validation-tip"></span>
 
 <script>
-    
+    //проверка массива на пустоту
     function isEmpty(obj) {
         for (let key in obj) {
           return false;
@@ -58,6 +58,8 @@ include_once _MODELS_DIR_.'Territory.php';
         return true;
     }
   
+  
+    //загрузка городов в select для городов
     function getCities(per_id){
         $.get({
             url: 'http://testphp/index.php?r=user/get-territories',
@@ -84,6 +86,8 @@ include_once _MODELS_DIR_.'Territory.php';
         });
     }
   
+  
+    //загрузка районов в select для районов
     function getDistr(per_id){
         $.get({
             url: 'http://testphp/index.php?r=user/get-territories',
@@ -116,21 +120,23 @@ include_once _MODELS_DIR_.'Territory.php';
     $(window).on('load',function (){
         $('.regions.chosen-select').chosen({no_results_text: "Область не найдена"});
 
-        $('button').on('click', function() {
-                $.get({
-                    url: 'http://testphp/index.php?r=user/get-territories',
-                    data:{
-                        'ter_pid':'0500000000',
-                        'ter_type_id':'1'
-                    },
-                    success: function(data) {
-                        console.log(JSON.parse(data));
-                    }
-                });
-        });
+//        $('button').on('click', function() {
+//                $.get({
+//                    url: 'http://testphp/index.php?r=user/get-territories',
+//                    data:{
+//                        'ter_pid':'0500000000',
+//                        'ter_type_id':'1'
+//                    },
+//                    success: function(data) {
+//                        console.log(JSON.parse(data));
+//                    }
+//                });
+//        });
         
         $('select.regions').on('change',function (){
             $this = $(this);
+            
+            //загрузка городов или сразу районов для областей (для Киева и Севастополя нужно сразу загружать районы)
             if ($this.val() == '8000000000' || $this.val() == '8500000000'){
                 $('select.cities').parent().addClass('disabled');
                 getDistr($this.val());
@@ -144,7 +150,7 @@ include_once _MODELS_DIR_.'Territory.php';
             getDistr($this.val());
         });
         
-        
+        //валидация перед отправкой формы
         $('.sub').on('click',function (event){
             event.preventDefault();
             $('div').find('input.user-data, div.chosen-container-single').
@@ -161,7 +167,7 @@ include_once _MODELS_DIR_.'Territory.php';
         });
         
         function validate(){
-            
+            //для select и input нужны разные селекторы  и уловия проверки 
             isValidated = true;
             $('form div').not('.disabled').find('div.chosen-container-single').each(function (){
                $this = $(this);

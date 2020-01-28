@@ -21,9 +21,11 @@ class UserController extends Controller{
                 
                 if(!User::isAlreadyRegistered($userData['email'])) {
                     if (isset($userData['city'])) {
+                        //если в городе есть районы
                         $user = new User($userData['name'], $userData['email'], $userData['district']);
                     }
                     else{
+                        //если в городе нету районов
                         $user = new User($userData['name'], $userData['email'], $userData['city']);
                     }
                     $user->save();
