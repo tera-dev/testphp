@@ -75,8 +75,7 @@ include_once _MODELS_DIR_.'Territory.php';
                     $('select.cities').empty('option').chosen("destroy").append(`<option></option>`);
                     console.log(arr);
                     arr.forEach(function(item, i, arr) {
-
-                    $('select.cities').append(`<option value=${item.id}>${item.name}</option>`);
+                        $('select.cities').append(`<option value=${item.id}>${item.name}</option>`);
                     });
 
                     $('select.cities').addClass('chosen-select').chosen({no_results_text: "Город не найден"});

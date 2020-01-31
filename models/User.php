@@ -17,13 +17,13 @@ class User{
     
 
     public function save(){
-        $pdo = new PDO('mysql:host=testphp;dbname=test_php_db', 'root', '');
+        $pdo = new PDO(DB_DSN, DB_USER, DB_PASS);
         $pdo->exec("INSERT INTO t_users (user_name, user_email, ter_id)"
                 . " VALUES ('{$this->name}', '{$this->email}', '{$this->territory}')");
     }
     
     public static function isAlreadyRegistered($email){
-        $pdo = new PDO('mysql:host=testphp;dbname=test_php_db', 'root', '');
+        $pdo = new PDO(DB_DSN, DB_USER, DB_PASS);
         $res = $pdo->query("SELECT user_email FROM t_users WHERE user_email = '{$email}'");
         if ($res->rowCount() > 0) {
             return true;
@@ -33,7 +33,7 @@ class User{
     
     public static function findUser($email){
         $userData = [];
-        $pdo = new PDO('mysql:host=testphp;dbname=test_php_db', 'root', '');
+        $pdo = new PDO(DB_DSN, DB_USER, DB_PASS);
         $res = $pdo->query("SELECT user_name, user_email, ter_address FROM t_users JOIN "
                 . "t_koatuu_tree ON t_koatuu_tree.ter_id = t_users.ter_id "
                 . "WHERE user_email = '{$email}'");

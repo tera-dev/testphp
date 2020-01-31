@@ -2,10 +2,6 @@
 
 
 class Territory{
-    
-    const REGION = 0, CITY = 1, DISTRICT = 3;
-    
-
 
     public $name;
     public $id;
@@ -29,14 +25,14 @@ class Territory{
     }
     
     public static function getTerritories($ter_pid = 'NULL', $ter_type_id = '0'){
-        $pdo = new PDO('mysql:host=testphp;dbname=test_php_db', 'root', '');
-        if ($ter_pid === 'NULL') {
+        $pdo = new PDO(DB_DSN, DB_USER, DB_PASS);
+        if ($ter_pid == 'NULL') {
             $result = $pdo->query("SELECT ter_name, ter_id from"
-                . " t_koatuu_tree WHERE ter_pid IS {$ter_pid} AND ter_type_id = {$ter_type_id}");
+                . " t_koatuu_tree WHERE ter_pid IS {$ter_pid} AND ter_type_id = '{$ter_type_id}'");
         }
         else{
             $result = $pdo->query("SELECT ter_name, ter_id from"
-                . " t_koatuu_tree WHERE ter_pid = {$ter_pid} AND ter_type_id = {$ter_type_id}");
+                . " t_koatuu_tree WHERE ter_pid = '{$ter_pid}' AND ter_type_id = '{$ter_type_id}'");
         }
         
                 
