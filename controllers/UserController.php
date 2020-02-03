@@ -15,19 +15,12 @@ class UserController extends Controller{
     public function actionCreate(){
         if (isset($_POST)) {
             if (isset($_POST['user'])) {
-                
                 $user;
                 $userData = $_POST['user'];
-                
+
+                $territoryId = explode('-', end($userData));
                 if(!User::isAlreadyRegistered($userData['email'])) {
-                    if (isset($userData['city'])) {
-                        //если в городе есть районы
-                        $user = new User($userData['name'], $userData['email'], $userData['district']);
-                    }
-                    else{
-                        //если в городе нету районов
-                        $user = new User($userData['name'], $userData['email'], $userData['city']);
-                    }
+                    $user = new User($userData['name'], $userData['email'], $territoryId[0]);
                     $user->save();
                     $this->redirect('index');
                 }
@@ -42,10 +35,7 @@ class UserController extends Controller{
     public function actionGetTerritories(){
         if (isset($_GET)) {
             if (isset($_GET['ter_pid'])) {
-                if (isset($_GET['ter_type_id'])) {
-                    echo json_encode(Territory::getTerritories($_GET['ter_pid'], $_GET['ter_type_id']));
-                }
-                
+                echo json_encode(Territory::getTerritories($_GET['ter_pid']));
             }
         }
     }

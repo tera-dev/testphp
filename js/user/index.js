@@ -6,17 +6,13 @@
         }
         return true;
     }
-  $('#check').click(function (){
-      console.log($('form input[type=email]').val());
-  });
   
-    //загрузка городов в select для городов
+    //загрузка городов и районов с селами в select
     function getCitiesAndRegions(per_id){
         $.get({
             url: Url.to('user/get-territories'),
             data:{
-                'ter_pid':per_id,
-                'ter_type_id':'1,2'
+                'ter_pid':per_id
             },
             success: function(data) {
                 let arr = JSON.parse(data);
@@ -42,17 +38,15 @@
             }
         });
     }
-    
+     //загрузка пгт/сел/городов в select 
     function getUrbanCitiesAndVilliages(per_id){
         $.get({
             url:Url.to('user/get-territories'),
             data:{
-                'ter_pid':per_id,
-                'ter_type_id':'4,5,6'
+                'ter_pid':per_id
             },
             success:function (data){
                 let arr = JSON.parse(data);
-                //убираем select для районов
                 console.log(arr);
                 if (!isEmpty(arr))  {
                     $select = $('select.urban-cities-and-villages');
@@ -74,29 +68,13 @@
         });
     }
     
-//    function cityHasDistricts(per_id){
-//        $.get({
-//            url:Url.to('user/get-territories'),
-//            data:{
-//                'ter_pid':per_id,
-//                'ter_type_id':'3'
-//            },
-//            success:function (){
-//                let arr = JSON.parse(data);
-//                if(isEmpty(arr)) return false; 
-//                return true;
-//            }
-//        });
-//    }
-//  
-  
-    //загрузка районов в select для районов
+
+    //загрузка районов города и сел в select
     function getCityDistrictsAndVillages(per_id){
         $.get({
             url: Url.to('user/get-territories'),
             data:{
-                'ter_pid':per_id,
-                'ter_type_id':'1,2,3,4,5,6'
+                'ter_pid':per_id
             },
             success: function(data) {
                 var arr = JSON.parse(data);
@@ -121,12 +99,12 @@
         });
     }
     
-        function getSettlements(per_id){
+    //загрузка сел и поселков, которые входят в состав выбранного пгт/села в select
+    function getSettlements(per_id){
         $.get({
             url: Url.to('user/get-territories'),
             data:{
-                'ter_pid':per_id,
-                'ter_type_id':'5,6'
+                'ter_pid':per_id
             },
             success: function(data) {
                 var arr = JSON.parse(data);
@@ -170,15 +148,17 @@
         
         $('select.regions-and-cities').on('change',function (){
             $this = $(this);
-            
+            //загрузка районов, в которых есть села и городов областного значение
             $('select.urban-cities-and-villages, select.villages-and-city-districts, select.settlements').
                         prop('disabled', true).parent().addClass('disabled');
             let ter_type = $this.val().split('-')[1];
             let ter_pid = $this.val().split('-')[0];
             if (ter_type === '1')  {
+                //если выбран город, то загружаются его районы и села/пгт, которые входят в его состав
                 getCityDistrictsAndVillages(ter_pid);
             }
             else{
+                //если выбран район, то загружаются его села/пгт/города
                 getUrbanCitiesAndVilliages(ter_pid);
             }
             
@@ -186,13 +166,15 @@
         
         $('select.urban-cities-and-villages').on('change',function (){
             $this = $(this);
+            //загрузка городов районного значения, пгт, сел
             $('select.villages-and-city-districts, select.settlements').
                         prop('disabled', true).parent().addClass('disabled');
-            getCityDistricts($this.val());
+            getCityDistrictsAndVillages($this.val());
         });
         
         $('select.villages-and-city-districts').on('change',function (){
             $this = $(this);
+            //загрузка районов города обласного значения и сел, входящих в него
             $('select.settlements').prop('disabled', true).parent().addClass('disabled');
             getSettlements($this.val());
         });
@@ -220,7 +202,7 @@
             });
             
             $('form input.user-data').each(function (){
-//                console.log($(this));
+
                $this = $(this);
                if ($(this).val() == '')  {
                    $(this).css('border','2px solid red');
@@ -229,13 +211,12 @@
                 }
             });
             
-            if ($('form input[type=email]').val().match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/) === null && 
+            if ($('form input[type=email]').val().match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,5}$/) === null && 
                     $('form input[type=email]').val() !== '') {
                 $('span.validation-tip.email').html('Адрес электронной почты должен иметь вид email@post.com');
                 isValidated = false;
             }  
-            
-//            console.log(isValidated);
+
             return isValidated;
         }
     });
