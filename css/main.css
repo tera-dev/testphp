@@ -1,3 +1,15 @@
 .disabled{
     display: none;
 }
+
+.chosen-container-single{
+    border-radius: 5px;
+}
+
+select{
+    width: 250px;
+}
+
+select.urban-cities-and-villages{
+    width: 300px;
+}

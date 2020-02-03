@@ -27,14 +27,14 @@ class App{
     }
 
     private static function toCamelCase($string){
-    $explodedString = explode("-", $string);
-    if (count($explodedString) > 1)  {
-        $parsedString = [];
-        foreach ($explodedString as $value) {
-            $parsedString [] = ucfirst($value);
+        $explodedString = explode("-", $string);
+        if (count($explodedString) > 1)  {
+            $parsedString = [];
+            foreach ($explodedString as $value) {
+                $parsedString [] = ucfirst($value);
+            }
+            return implode($parsedString);
         }
-        return implode($parsedString);
+        return $string;
     }
-    return $string;
-}
 }

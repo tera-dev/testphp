@@ -13,5 +13,8 @@ include_once './config.php';
 include_once _CORE_.'App.php';
 
 App::run();
+//include './helpers/Url.php';
+//
+//echo Url::toRoute('user/view');
 
 
