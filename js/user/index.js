@@ -58,7 +58,7 @@
                             parent().removeClass('disabled');
                     
                     arr.forEach(function(item) {
-                        $select.append(`<option vvalue=${item.id}>${item.name}</option>`);
+                        $select.append(`<option value=${item.id}>${item.name}</option>`);
                     });
 
                     $select.addClass('chosen-select').chosen({no_results_text: "Посёлок (село) не найден (-о)"});
@@ -78,7 +78,7 @@
             },
             success: function(data) {
                 var arr = JSON.parse(data);
-                
+                console.log(arr);
                 if (!isEmpty(arr))  {
                     $select = $('select.villages-and-city-districts');
                     
@@ -108,7 +108,7 @@
             },
             success: function(data) {
                 var arr = JSON.parse(data);
-                
+                console.log(arr);
                 if (!isEmpty(arr))  {
                     $select = $('select.settlements');
                     
@@ -213,7 +213,7 @@
             
             if ($('form input[type=email]').val().match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,5}$/) === null && 
                     $('form input[type=email]').val() !== '') {
-                $('span.validation-tip.email').html('Адрес электронной почты должен иметь вид email@post.com');
+                $('span.validation-tip.email').html(`Адрес электронной почты должен иметь вид <b>email@post.com</b> и содержать только латинские буквы`);
                 isValidated = false;
             }  
 
