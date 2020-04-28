@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/iadmin/www/testphp/js/user/index.js</file>
-            <file>file:/home/iadmin/www/testphp/models/Territory.php</file>
-            <file>file:/home/iadmin/www/testphp/js/main.js</file>
-            <file>file:/home/iadmin/www/testphp/views/user/index.php</file>
-            <file>file:/home/iadmin/www/testphp/controllers/UserController.php</file>
-            <file>file:/home/iadmin/www/testphp/css/main.css</file>
-            <file>file:/home/iadmin/www/testphp/helpers/Url.php</file>
-            <file>file:/home/iadmin/www/testphp/index.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

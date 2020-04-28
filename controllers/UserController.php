@@ -39,5 +39,18 @@ class UserController extends Controller{
             }
         }
     }
+    
+    public static function actionGetCitiesWithSprecialStatus() {
+        $pdo = new PDO(DB_DSN, DB_USER, DB_PASS);
+        $result = $pdo->query("SELECT ter_id FROM `t_koatuu_tree` WHERE ter_pid IS NULL && ter_name LIKE 'м.%';");
+        $citiesIDs = [];
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetchObject()){
+                $citiesIDs[] = $row->ter_id;
+            }
+        }
+        echo json_encode($citiesIDs);
+    }
+ 
 }
 
